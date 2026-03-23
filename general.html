@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Service - Mymoon</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+      <div class="logo">Mymoon</div>
+    </div>
+
+    <!-- CENTER -->
+    <div class="center">
+      <div class="container">
+
+        <!-- TITLE -->
+        <h1 class="title">
+          We’ll help you find the right service
+        </h1>
+
+        <!-- FORM -->
+        <div class="form-container">
+
+          <!-- USER QUERY -->
+          <div class="form-group">
+            <input 
+              type="text"
+              id="userQuery"
+              class="input"
+              readonly
+            >
+          </div>
+
+          <!-- NAME -->
+          <div class="form-group">
+            <input 
+              type="text"
+              placeholder="Your name"
+              class="input"
+              required
+            >
+          </div>
+
+          <!-- PHONE -->
+          <div class="form-group">
+            <input 
+              type="tel"
+              placeholder="Phone number"
+              class="input"
+              required
+            >
+          </div>
+
+          <!-- SUBMIT -->
+          <button class="btn">
+            Get Help Now
+          </button>
+
+          <!-- TRUST TEXT -->
+          <div class="trust">
+            Our team will connect you with the right expert shortly
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JS -->
+  <script>
+
+    // Get query from URL
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get("query");
+
+    const input = document.getElementById("userQuery");
+
+    if (query) {
+      input.value = query;
+    } else {
+      input.value = "Your request";
+    }
+
+  </script>
+
+</body>
+</html>
