@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pest Control - Mymoon</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+      <div class="logo">Mymoon</div>
+    </div>
+
+    <!-- CENTER -->
+    <div class="center">
+      <div class="container">
+
+        <!-- TITLE -->
+        <h1 class="title">
+          Get fast pest control service
+        </h1>
+
+        <!-- FORM -->
+        <div class="form-container">
+
+          <!-- QUERY -->
+          <div class="form-group">
+            <input 
+              type="text"
+              id="userQuery"
+              class="input"
+              readonly
+            >
+          </div>
+
+          <!-- PEST TYPE -->
+          <div class="form-group">
+            <select class="input" required>
+              <option value="">Select pest problem</option>
+              <option>Termite</option>
+              <option>Cockroach</option>
+              <option>Bed Bugs</option>
+              <option>Rodents</option>
+              <option>Mosquito</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <!-- PROPERTY TYPE -->
+          <div class="form-group">
+            <select class="input" required>
+              <option value="">Property type</option>
+              <option>1 BHK</option>
+              <option>2 BHK</option>
+              <option>3 BHK</option>
+              <option>Villa</option>
+              <option>Office / Shop</option>
+            </select>
+          </div>
+
+          <!-- URGENCY -->
+          <div class="form-group">
+            <select class="input" required>
+              <option value="">When do you need service?</option>
+              <option>Today</option>
+              <option>Within 24 hours</option>
+              <option>This week</option>
+            </select>
+          </div>
+
+          <!-- NAME -->
+          <div class="form-group">
+            <input 
+              type="text"
+              placeholder="Your name"
+              class="input"
+              required
+            >
+          </div>
+
+          <!-- PHONE -->
+          <div class="form-group">
+            <input 
+              type="tel"
+              placeholder="Phone number"
+              class="input"
+              required
+            >
+          </div>
+
+          <!-- CTA -->
+          <button class="btn">
+            Get Free Inspection
+          </button>
+
+          <!-- TRUST TEXT -->
+          <div class="trust">
+            Safe treatment · Verified experts · Quick response
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JS -->
+  <script>
+
+    // Prefill query
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get("query");
+
+    const input = document.getElementById("userQuery");
+
+    if (query) {
+      input.value = query;
+    } else {
+      input.value = "Pest Control";
+    }
+
+  </script>
+
+</body>
+</html>
