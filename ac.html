@@ -89,17 +89,20 @@
               >
             </div>
 
-            <!-- PHONE -->
-            <div class="form-group">
-              <input 
-                type="tel"
-                name="phone"
-                placeholder="Phone number"
-                class="input"
-                required
-              >
-            </div>
-
+            <<!-- PHONE -->
+<div class="form-group">
+  <input 
+    type="tel"
+    name="phone"
+    placeholder="Phone number"
+    class="input"
+    pattern="[0-9]{10,}"
+    minlength="10"
+    maxlength="15"
+    inputmode="numeric"
+    required
+  >
+</div>
             <!-- SUBMIT -->
             <button type="submit" class="btn" id="submitBtn">
               Book AC Service
