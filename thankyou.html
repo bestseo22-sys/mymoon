@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Submitted - Mymoon</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="page">
+
+    <div class="center">
+      <div class="container">
+
+        <h1 class="title">
+          Request submitted successfully
+        </h1>
+
+        <p class="trust" id="message">
+          We are connecting you with the right service provider
+        </p>
+
+        <div class="chips" style="margin-top:20px;">
+          <div class="chip" onclick="goHome()">Back to Home</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+
+    const params = new URLSearchParams(window.location.search);
+    const service = params.get("service");
+
+    const msg = document.getElementById("message");
+
+    if (service) {
+      msg.innerText = "We are connecting you with the best " + service + " near you";
+    }
+
+    function goHome() {
+      window.location.href = "index.html";
+    }
+
+  </script>
+
+</body>
+</html>
