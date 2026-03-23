@@ -13,17 +13,53 @@
   <div class="page">
 
     <div class="center">
-      <div class="container">
+      <div class="container" style="text-align:center; max-width:520px;">
 
+        <!-- SUCCESS TITLE -->
         <h1 class="title">
-          Request submitted successfully
+          Request received
         </h1>
 
-        <p class="trust" id="message">
+        <!-- DYNAMIC MESSAGE -->
+        <p class="trust" id="serviceMessage" style="margin-bottom:16px;">
           We are connecting you with the right service provider
         </p>
 
-        <div class="chips" style="margin-top:20px;">
+        <!-- STATUS BOX -->
+        <div class="card" style="margin-top:20px;">
+
+          <p style="font-size:14px; margin-bottom:10px;">
+            What happens next:
+          </p>
+
+          <p class="trust">
+            • You will receive a call shortly  
+          </p>
+
+          <p class="trust">
+            • Verified professionals will contact you  
+          </p>
+
+          <p class="trust">
+            • Compare and choose the best option  
+          </p>
+
+        </div>
+
+        <!-- URGENCY -->
+        <div class="trust" style="margin-top:16px;">
+          Expected response time: <strong>5–15 minutes</strong>
+        </div>
+
+        <!-- WHATSAPP CTA -->
+        <div style="margin-top:20px;">
+          <button class="btn" onclick="openWhatsApp()">
+            Chat on WhatsApp
+          </button>
+        </div>
+
+        <!-- BACK HOME -->
+        <div class="chips" style="margin-top:16px;">
           <div class="chip" onclick="goHome()">Back to Home</div>
         </div>
 
@@ -37,7 +73,7 @@
     const params = new URLSearchParams(window.location.search);
     const service = params.get("service");
 
-    const msg = document.getElementById("message");
+    const msg = document.getElementById("serviceMessage");
 
     if (service) {
       msg.innerText = "We are connecting you with the best " + service + " near you";
@@ -45,6 +81,13 @@
 
     function goHome() {
       window.location.href = "index.html";
+    }
+
+    function openWhatsApp() {
+      const phone = "91XXXXXXXXXX"; // replace with your number
+      const text = "Hi, I just submitted a request on Mymoon for " + (service || "a service");
+      const url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
+      window.open(url, "_blank");
     }
 
   </script>
