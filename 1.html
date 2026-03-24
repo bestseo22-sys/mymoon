@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mymoon</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .search-wrapper {
+      position: relative;
+    }
+
+    .suggestions {
+      position: absolute;
+      width: 100%;
+      top: 100%;
+      margin-top: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: none;
+      z-index: 10;
+    }
+
+    .suggestion-item {
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .suggestion-item:hover {
+      background: var(--elevated);
+    }
+
+    .trending {
+      margin-top: 40px;
+    }
+
+    .trend-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .trend-item:hover {
+      color: var(--primary);
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+  <div class="navbar">
+    <div class="logo">Mymoon</div>
+  </div>
+
+  <div class="center">
+    <div class="container">
+
+      <!-- SEARCH -->
+      <div class="search-wrapper">
+
+        <form id="searchForm">
+          <div class="search-box">
+            <input 
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search services..."
+              autocomplete="off"
+            >
+          </div>
+        </form>
+
+        <!-- SUGGESTIONS -->
+        <div class="suggestions" id="suggestionsBox"></div>
+
+      </div>
+
+      <!-- TRENDING -->
+      <div class="trending">
+
+        <div class="section-title">Trending searches</div>
+
+        <div class="trend-item" onclick="goSearch('packers and movers near me')">
+          Packers & movers near me
+        </div>
+
+        <div class="trend-item" onclick="goSearch('pest control near me')">
+          Pest control near me
+        </div>
+
+        <div class="trend-item" onclick="goSearch('ac repair near me')">
+          AC repair near me
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+const input = document.getElementById("searchInput");
+const box = document.getElementById("suggestionsBox");
+
+// Suggestion data (important)
+const suggestions = [
+  "packers and movers near me",
+  "house shifting services",
+  "pest control near me",
+  "termite treatment",
+  "ac repair near me",
+  "ac gas refill",
+  "home cleaning services"
+];
+
+// Show suggestions
+input.addEventListener("input", function() {
+  const value = this.value.toLowerCase();
+
+  box.innerHTML = "";
+
+  if (!value) {
+    box.style.display = "none";
+    return;
+  }
+
+  const filtered = suggestions.filter(item =>
+    item.includes(value)
+  );
+
+  filtered.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "suggestion-item";
+    div.innerText = item;
+
+    div.onclick = () => goSearch(item);
+
+    box.appendChild(div);
+  });
+
+  box.style.display = "block";
+});
+
+// Search submit
+document.getElementById("searchForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  goSearch(input.value);
+});
+
+// Routing
+function goSearch(query) {
+  query = query.toLowerCase();
+
+  if (query.includes("pack") || query.includes("move")) {
+    window.location.href = "movers.html?query=" + encodeURIComponent(query);
+  }
+  else if (query.includes("pest") || query.includes("termite")) {
+    window.location.href = "pest.html?query=" + encodeURIComponent(query);
+  }
+  else if (query.includes("ac")) {
+    window.location.href = "ac.html?query=" + encodeURIComponent(query);
+  }
+  else {
+    window.location.href = "general.html?query=" + encodeURIComponent(query);
+  }
+}
+
+// Close suggestions when clicking outside
+document.addEventListener("click", function(e) {
+  if (!e.target.closest(".search-wrapper")) {
+    box.style.display = "none";
+  }
+});
+
+</script>
+
+</body>
+</html>
