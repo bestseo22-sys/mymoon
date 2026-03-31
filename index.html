@@ -1,11 +1,41 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Moon1 - Find trusted services</title>
 
-  <!-- CSS -->
+  <!-- SEO -->
+  <title>MyMoon – Find Trusted Home Services Near You</title>
+  <meta name="description" content="Book verified packers & movers, pest control, AC repair and more near you. Fast response, affordable prices, no spam. MyMoon connects you with trusted service professionals.">
+  <meta name="keywords" content="packers and movers near me, pest control near me, AC repair near me, home services, house shifting, termite treatment">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mymoon-brown.vercel.app/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MyMoon – Find Trusted Home Services Near You">
+  <meta property="og:description" content="Book verified packers & movers, pest control, AC repair and more. Fast response, no spam.">
+  <meta property="og:url" content="https://mymoon-brown.vercel.app/">
+  <meta property="og:site_name" content="MyMoon">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="MyMoon – Trusted Home Services">
+  <meta name="twitter:description" content="Book packers & movers, pest control, AC repair and more near you.">
+
+  <!-- Schema.org LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "MyMoon",
+    "description": "Find trusted home services near you – packers & movers, pest control, AC repair and more.",
+    "url": "https://mymoon-brown.vercel.app/",
+    "serviceType": ["Packers and Movers", "Pest Control", "AC Repair", "Home Services"]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -14,113 +44,161 @@
   <div class="page">
 
     <!-- NAVBAR -->
-    <div class="navbar">
-      <div class="logo">My Moon</div>
-    </div>
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="/" class="logo" aria-label="MyMoon Home">My<span>Moon</span></a>
+    </nav>
 
     <!-- CENTER CONTENT -->
-    <div class="center">
-      <div class="container">
+    <main class="center">
+      <div class="container fade-in">
 
         <!-- HEADLINE -->
         <h1 class="title">
-          Find trusted services near you
+          Find trusted home services near you
         </h1>
 
         <!-- SEARCH FORM -->
-        <form id="searchForm">
-          <div class="search-box">
+        <div class="search-wrapper">
+          <form id="searchForm" role="search" aria-label="Search services">
+            <div class="search-box">
+              <input 
+                type="search"
+                id="searchInput"
+                class="search-input"
+                placeholder="Search packers, pest control, AC repair…"
+                autocomplete="off"
+                aria-label="Search for services"
+                required
+              >
+              <button type="submit" class="search-btn" aria-label="Search">
+                Search
+              </button>
+            </div>
+          </form>
 
-            <input 
-              type="text"
-              id="searchInput"
-              class="search-input"
-              placeholder="Search for packers, pest control, AC repair..."
-              required
-            >
-
-            <button type="submit" class="search-btn">
-              Search
-            </button>
-
-          </div>
-        </form>
+          <!-- SUGGESTIONS -->
+          <div class="suggestions" id="suggestionsBox" role="listbox" aria-label="Search suggestions"></div>
+        </div>
 
         <!-- SUGGESTION CHIPS -->
-        <div class="chips">
-          <div class="chip" onclick="selectService('packers and movers')">Packers & Movers</div>
-          <div class="chip" onclick="selectService('pest control')">Pest Control</div>
-          <div class="chip" onclick="selectService('ac repair')">AC Repair</div>
+        <div class="chips" role="list" aria-label="Popular service categories">
+          <div class="chip" role="listitem" onclick="selectService('packers and movers')">📦 Packers & Movers</div>
+          <div class="chip" role="listitem" onclick="selectService('pest control')">🐜 Pest Control</div>
+          <div class="chip" role="listitem" onclick="selectService('ac repair')">❄️ AC Repair</div>
         </div>
 
         <!-- TRUST TEXT -->
-        <div class="trust">
-          Verified professionals · Quick response · No spam
-        </div>
+        <p class="trust">
+          Verified professionals · Quick response · No spam calls
+        </p>
 
-        <!-- SECONDARY SECTION -->
-        <div class="section">
+        <!-- POPULAR SERVICES SECTION -->
+        <section class="section" aria-label="Popular services">
 
-          <div class="section-title">
-            Popular services
-          </div>
+          <div class="section-title">Popular services</div>
 
           <div class="grid">
-
-            <div class="card" onclick="selectService('interior design')">
-              Interior Design
+            <div class="card" onclick="selectService('interior design')" tabindex="0" role="button" aria-label="Interior Design service">
+              🛋️ Interior Design
             </div>
-
-            <div class="card" onclick="selectService('solar installation')">
-              Solar Installation
+            <div class="card" onclick="selectService('solar installation')" tabindex="0" role="button" aria-label="Solar Installation service">
+              ☀️ Solar Installation
             </div>
-
-            <div class="card" onclick="selectService('wedding photography')">
-              Wedding Photography
+            <div class="card" onclick="selectService('home cleaning')" tabindex="0" role="button" aria-label="Home Cleaning service">
+              🧹 Home Cleaning
             </div>
-
           </div>
 
-        </div>
+        </section>
 
       </div>
-    </div>
+    </main>
 
   </div>
 
-  <!-- JS LOGIC -->
   <script>
-
     const form = document.getElementById("searchForm");
     const input = document.getElementById("searchInput");
+    const box = document.getElementById("suggestionsBox");
+
+    const suggestions = [
+      "packers and movers near me",
+      "house shifting services",
+      "office relocation",
+      "pest control near me",
+      "termite treatment",
+      "cockroach control",
+      "ac repair near me",
+      "ac gas refill",
+      "ac installation",
+      "home cleaning services",
+      "interior design",
+      "solar installation"
+    ];
+
+    input.addEventListener("input", function () {
+      const value = this.value.toLowerCase().trim();
+      box.innerHTML = "";
+
+      if (!value) {
+        box.style.display = "none";
+        return;
+      }
+
+      const filtered = suggestions.filter(item => item.includes(value)).slice(0, 6);
+
+      filtered.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "suggestion-item";
+        div.textContent = item;
+        div.setAttribute("role", "option");
+        div.onclick = () => selectService(item);
+        box.appendChild(div);
+      });
+
+      box.style.display = filtered.length ? "block" : "none";
+    });
+
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") box.style.display = "none";
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".search-wrapper")) box.style.display = "none";
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (input.value.trim()) selectService(input.value);
+    });
+
+    // Keyboard support for cards
+    document.querySelectorAll(".card[tabindex]").forEach(card => {
+      card.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") card.click();
+      });
+    });
 
     function selectService(service) {
       input.value = service;
+      box.style.display = "none";
       handleSearch(service);
     }
 
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-      handleSearch(input.value);
-    });
-
     function handleSearch(query) {
-      query = query.toLowerCase();
+      query = query.toLowerCase().trim();
+      if (!query) return;
 
-      if (query.includes("pack") || query.includes("move")) {
+      if (query.includes("pack") || query.includes("move") || query.includes("shift") || query.includes("reloc")) {
         window.location.href = "movers.html?query=" + encodeURIComponent(query);
-      }
-      else if (query.includes("pest") || query.includes("termite")) {
+      } else if (query.includes("pest") || query.includes("termite") || query.includes("cockroach") || query.includes("bed bug")) {
         window.location.href = "pest.html?query=" + encodeURIComponent(query);
-      }
-      else if (query.includes("ac") || query.includes("cool")) {
+      } else if (query.includes("ac") || query.includes("cool") || query.includes("air condition")) {
         window.location.href = "ac.html?query=" + encodeURIComponent(query);
-      }
-      else {
+      } else {
         window.location.href = "general.html?query=" + encodeURIComponent(query);
       }
     }
-
   </script>
 
 </body>
