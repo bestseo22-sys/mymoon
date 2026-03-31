@@ -7,18 +7,6 @@
 <title>Movers and Packers Near Me in Lucknow | Safe Fast Affordable</title>
 <meta name="description" content="Book trusted movers and packers near you in Lucknow. Safe, fast, affordable house shifting starting ₹1999. Free quote in 2 minutes.">
 
-<!-- Schema -->
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "LocalBusiness",
- "name": "MyMoon Movers",
- "areaServed": "Lucknow",
- "serviceType": "Packers and Movers",
- "description": "Affordable and safe house shifting services in Lucknow"
-}
-</script>
-
 <link rel="stylesheet" href="style.css">
 
 <style>
@@ -38,41 +26,39 @@
 <main class="center">
 <div class="container">
 
-<h1 class="title">
-Get Safe and Fast House Shifting in <span id="loc">Lucknow</span>
-</h1>
-
-<p class="trust">
-⭐ 4.8 rating · 1000+ homes shifted · Starting ₹1999
-</p>
-
-<p class="trust" style="color:#d93025;">
-Limited slots today · Book before 6 PM
-</p>
+<h1 class="title">Get Safe and Fast House Shifting in Lucknow</h1>
+<p class="trust">⭐ 4.8 rating · 1000+ homes shifted · Starting ₹1999</p>
+<p class="trust" style="color:#d93025;">Limited slots today · Book before 6 PM</p>
 
 <div class="form-container">
 <form id="leadForm">
 
 <input type="hidden" name="service" value="Packers & Movers">
-<input type="hidden" name="_subject" value="New Movers Lead">
 
 <div class="step active" id="s1">
+<div class="form-group"><input type="text" name="from" placeholder="Moving from" class="input" required></div>
+<div class="form-group"><input type="text" name="to" placeholder="Moving to" class="input" required></div>
 <div class="form-group">
-<input type="text" name="from" placeholder="Moving from (area)" class="input" required>
+<select name="type" class="input" required>
+<option value="">Type of shifting</option>
+<option>1 BHK</option>
+<option>2 BHK</option>
+<option>3 BHK</option>
+<option>Apartment</option>
+<option>Villa</option>
+<option>Office</option>
+<option>Car</option>
+<option>Bike</option>
+<option>Pet</option>
+</select>
 </div>
-
-<div class="form-group">
-<input type="text" name="to" placeholder="Moving to (area)" class="input" required>
-</div>
-
 <button type="button" class="btn" onclick="nextStep()">Get Instant Price</button>
 </div>
 
 <div class="step" id="s2">
-<div class="form-group">
-<input type="tel" name="phone" placeholder="Mobile number" class="input" required>
-</div>
-
+<div class="form-group"><input type="text" name="name" placeholder="Your name" class="input" required></div>
+<div class="form-group"><input type="date" name="date" class="input" required></div>
+<div class="form-group"><input type="tel" name="phone" placeholder="Mobile number" class="input" required></div>
 <button class="btn">Get Free Quote</button>
 </div>
 
@@ -88,24 +74,41 @@ Limited slots today · Book before 6 PM
 </div>
 </section>
 
-<section class="section">
-<div class="section-title">Recent moves</div>
-<div class="grid">
-<div class="card">2BHK shifted in 5 hours</div>
-<div class="card">Saved ₹2000 vs others</div>
-<div class="card">Zero damage delivery</div>
-</div>
-</section>
-
-<!-- SEO Content -->
 <section class="section" style="text-align:left;">
 <h2 class="title" style="text-align:left;">Movers and Packers in Lucknow Near You</h2>
+
 <p class="trust" style="text-align:left;">
-We provide reliable movers and packers services across Gomti Nagar, Indira Nagar, Alambagh and nearby areas. Safe packing, fast delivery and affordable pricing.
+We provide reliable movers and packers services across Lucknow including Gomti Nagar, Indira Nagar, Alambagh and nearby areas. Our service is designed for safe, fast and affordable house shifting.
 </p>
+
 <p class="trust" style="text-align:left;">
-Book your house shifting with trained professionals. We handle packing, loading, transport and unloading with care. Starting price ₹1999.
+Our trained professionals handle packing, loading, transportation and unloading with full care. We use quality packing materials to ensure zero damage delivery.
 </p>
+
+<p class="trust" style="text-align:left;">
+Whether you are shifting 1 BHK, 2 BHK, 3 BHK, villa, office or vehicle, we provide complete relocation solutions at affordable rates.
+</p>
+
+<p class="trust" style="text-align:left;">
+We focus on customer satisfaction, timely delivery and transparent pricing. Our services are trusted by hundreds of families and businesses.
+</p>
+
+<p class="trust" style="text-align:left;">
+Book your movers and packers service today and get instant quotes. Compare prices, choose the best option and enjoy hassle free shifting experience.
+</p>
+
+<p class="trust" style="text-align:left;">
+We also provide local shifting, intercity relocation, office shifting, car transport and bike transport services. Our goal is to make your move smooth and stress free.
+</p>
+
+<p class="trust" style="text-align:left;">
+With our experienced team and professional approach, you can trust us for safe and secure relocation. We ensure every item is handled carefully.
+</p>
+
+<p class="trust" style="text-align:left;">
+Our services are affordable, reliable and fast. Starting price ₹1999 with no hidden charges.
+</p>
+
 </section>
 
 </div>
@@ -122,33 +125,20 @@ document.getElementById('s1').classList.remove('active');
 document.getElementById('s2').classList.add('active');
 }
 
-function call(){
-window.location.href='tel:917460036898';
-}
-
-function wa(){
-window.open('https://wa.me/917460036898','_blank');
-}
-
-// dynamic location
-const params=new URLSearchParams(window.location.search);
-const area=params.get('area');
-if(area){document.getElementById('loc').innerText=area;}
+function call(){window.location.href='tel:917460036898';}
+function wa(){window.open('https://wa.me/917460036898','_blank');}
 
 document.getElementById('leadForm').addEventListener('submit', async function(e){
 e.preventDefault();
 const formData=new FormData(this);
 
-try{
 await fetch("https://formspree.io/f/xwvrdjjz",{
 method:"POST",
 body:formData,
 headers:{Accept:"application/json"}
 });
-window.location.href="thankyou.html?service=Packers%20and%20Movers";
-}catch(err){
-alert("Try again");
-}
+
+window.location.href="thankyou.html";
 });
 </script>
 
