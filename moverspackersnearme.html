@@ -5,57 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Movers and Packers Near Me in Lucknow | Safe Fast Affordable</title>
-<meta name="description" content="Get safe and fast house shifting in Lucknow. Free quote in 2 minutes. Starting ₹1999. No damage guarantee.">
+<meta name="description" content="Book trusted movers and packers near you in Lucknow. Safe, fast, affordable house shifting starting ₹1999. Free quote in 2 minutes.">
+
+<!-- Schema -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "LocalBusiness",
+ "name": "MyMoon Movers",
+ "areaServed": "Lucknow",
+ "serviceType": "Packers and Movers",
+ "description": "Affordable and safe house shifting services in Lucknow"
+}
+</script>
 
 <link rel="stylesheet" href="style.css">
 
 <style>
-.whatsapp-btn {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  background: #25D366;
-  color: white;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:26px;
-  text-decoration:none;
-  z-index:1000;
-}
-
-.call-btn {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #1a73e8;
-  color: white;
-  text-align: center;
-  padding: 14px;
-  font-weight: 600;
-  z-index:999;
-}
-
-.step {display:none;}
-.step.active {display:block;}
-.badge {
-  display:inline-block;
-  background:#e8f0fe;
-  color:#1a73e8;
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  margin:4px;
-}
+.whatsapp-btn{position:fixed;bottom:80px;right:20px;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;z-index:1000;}
+.call-btn{position:fixed;bottom:0;left:0;width:100%;background:#1a73e8;color:#fff;text-align:center;padding:14px;font-weight:600;z-index:999;}
+.step{display:none;} .step.active{display:block;}
 </style>
 </head>
 
 <body>
-
 <div class="page">
 
 <nav class="navbar">
@@ -73,13 +46,15 @@ Get Safe and Fast House Shifting in <span id="loc">Lucknow</span>
 ⭐ 4.8 rating · 1000+ homes shifted · Starting ₹1999
 </p>
 
-<p class="trust" style="color:#d93025;font-weight:500;">
+<p class="trust" style="color:#d93025;">
 Limited slots today · Book before 6 PM
 </p>
 
 <div class="form-container">
-
 <form id="leadForm">
+
+<input type="hidden" name="service" value="Packers & Movers">
+<input type="hidden" name="_subject" value="New Movers Lead">
 
 <div class="step active" id="s1">
 <div class="form-group">
@@ -90,9 +65,7 @@ Limited slots today · Book before 6 PM
 <input type="text" name="to" placeholder="Moving to (area)" class="input" required>
 </div>
 
-<button type="button" class="btn" onclick="nextStep()">
-Get Instant Price
-</button>
+<button type="button" class="btn" onclick="nextStep()">Get Instant Price</button>
 </div>
 
 <div class="step" id="s2">
@@ -104,11 +77,10 @@ Get Instant Price
 </div>
 
 </form>
-
 </div>
 
 <section class="section">
-<div class="section-title">Why people choose us</div>
+<div class="section-title">Why choose us</div>
 <div class="grid">
 <div class="card">No damage guarantee</div>
 <div class="card">On time delivery</div>
@@ -125,13 +97,15 @@ Get Instant Price
 </div>
 </section>
 
-<section class="section">
-<div class="section-title">FAQs</div>
-<div class="grid">
-<div class="card">Price starts ₹1999</div>
-<div class="card">Same day shifting</div>
-<div class="card">Packing included</div>
-</div>
+<!-- SEO Content -->
+<section class="section" style="text-align:left;">
+<h2 class="title" style="text-align:left;">Movers and Packers in Lucknow Near You</h2>
+<p class="trust" style="text-align:left;">
+We provide reliable movers and packers services across Gomti Nagar, Indira Nagar, Alambagh and nearby areas. Safe packing, fast delivery and affordable pricing.
+</p>
+<p class="trust" style="text-align:left;">
+Book your house shifting with trained professionals. We handle packing, loading, transport and unloading with care. Starting price ₹1999.
+</p>
 </section>
 
 </div>
@@ -156,14 +130,25 @@ function wa(){
 window.open('https://wa.me/917460036898','_blank');
 }
 
-// dynamic location via URL
+// dynamic location
 const params=new URLSearchParams(window.location.search);
 const area=params.get('area');
 if(area){document.getElementById('loc').innerText=area;}
 
-document.getElementById('leadForm').addEventListener('submit',function(e){
+document.getElementById('leadForm').addEventListener('submit', async function(e){
 e.preventDefault();
-window.location.href='thankyou.html';
+const formData=new FormData(this);
+
+try{
+await fetch("https://formspree.io/f/xwvrdjjz",{
+method:"POST",
+body:formData,
+headers:{Accept:"application/json"}
+});
+window.location.href="thankyou.html?service=Packers%20and%20Movers";
+}catch(err){
+alert("Try again");
+}
 });
 </script>
 
