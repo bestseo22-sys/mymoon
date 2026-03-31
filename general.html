@@ -1,9 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Request Service - My Moon</title>
+
+  <!-- SEO -->
+  <title>Request Any Home Service – MyMoon</title>
+  <meta name="description" content="Can't find what you need? Tell us and we'll connect you with the right service professional near you. Fast, trusted, no spam.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mymoon-brown.vercel.app/general.html">
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -13,84 +19,121 @@
   <div class="page">
 
     <!-- NAVBAR -->
-    <div class="navbar">
-      <div class="logo">My Moon</div>
-    </div>
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="index.html" class="logo" aria-label="Back to MyMoon Home">My<span>Moon</span></a>
+    </nav>
 
     <!-- CENTER -->
-    <div class="center">
+    <main class="center">
       <div class="container">
 
-        <!-- TITLE -->
         <h1 class="title">
-          We’ll help you find the right service
+          We'll find the right expert for you
         </h1>
 
-        <!-- FORM -->
-        <div class="form-container">
+        <div class="form-container fade-in">
 
-          <!-- USER QUERY -->
-          <div class="form-group">
-            <input 
-              type="text"
-              id="userQuery"
-              class="input"
-              readonly
-            >
-          </div>
+          <form id="leadForm" novalidate>
 
-          <!-- NAME -->
-          <div class="form-group">
-            <input 
-              type="text"
-              placeholder="Your name"
-              class="input"
-              required
-            >
-          </div>
+            <input type="hidden" name="service" value="General Enquiry">
+            <input type="hidden" name="_subject" value="New Service Enquiry – MyMoon">
 
-          <!-- PHONE -->
-          <div class="form-group">
-            <input 
-              type="tel"
-              placeholder="Phone number"
-              class="input"
-              required
-            >
-          </div>
+            <!-- Query (prefilled) -->
+            <div class="form-group">
+              <input 
+                type="text"
+                id="userQuery"
+                name="query"
+                class="input"
+                readonly
+                aria-label="Your search query"
+              >
+            </div>
 
-          <!-- SUBMIT -->
-          <button class="btn">
-            Get Help Now
-          </button>
+            <!-- Name -->
+            <div class="form-group">
+              <input 
+                type="text"
+                name="name"
+                placeholder="Your full name"
+                class="input"
+                required
+                autocomplete="name"
+                aria-label="Your name"
+              >
+            </div>
 
-          <!-- TRUST TEXT -->
-          <div class="trust">
-            Our team will connect you with the right expert shortly
-          </div>
+            <!-- Phone -->
+            <div class="form-group">
+              <input 
+                type="tel"
+                name="phone"
+                placeholder="Mobile number"
+                class="input"
+                pattern="[6-9][0-9]{9}"
+                minlength="10"
+                maxlength="10"
+                inputmode="numeric"
+                required
+                autocomplete="tel"
+                aria-label="Mobile number"
+              >
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn" id="submitBtn">
+              Get Help Now
+            </button>
+
+            <p class="trust">
+              Our team will connect you with the right expert shortly
+            </p>
+
+          </form>
 
         </div>
 
       </div>
-    </div>
+    </main>
 
   </div>
 
-  <!-- JS -->
   <script>
-
-    // Get query from URL
     const params = new URLSearchParams(window.location.search);
     const query = params.get("query");
+    document.getElementById("userQuery").value = query || "General Service";
 
-    const input = document.getElementById("userQuery");
+    const form = document.getElementById("leadForm");
+    const btn = document.getElementById("submitBtn");
 
-    if (query) {
-      input.value = query;
-    } else {
-      input.value = "Your request";
-    }
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
 
+      const phone = form.querySelector('input[name="phone"]').value;
+      if (!/^[6-9][0-9]{9}$/.test(phone)) {
+        alert("Please enter a valid 10-digit Indian mobile number.");
+        return;
+      }
+
+      btn.textContent = "Submitting…";
+      btn.disabled = true;
+
+      const formData = new FormData(form);
+      const service = formData.get("service") || "service";
+
+      try {
+        await fetch("https://formspree.io/f/xwvrdjjz", {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "application/json" }
+        });
+        window.location.href = "thankyou.html?service=" + encodeURIComponent(service);
+      } catch (err) {
+        alert("Something went wrong. Please try again.");
+        btn.textContent = "Get Help Now";
+        btn.disabled = false;
+      }
+    });
   </script>
 
 </body>
