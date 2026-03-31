@@ -1,9 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Packers & Movers - My Moon</title>
+
+  <!-- SEO -->
+  <title>Packers & Movers Near Me – Free Quotes | MyMoon</title>
+  <meta name="description" content="Find verified packers and movers near you. Get free quotes for house shifting, office relocation and local moving. Trusted professionals, quick response.">
+  <meta name="keywords" content="packers and movers near me, house shifting, office relocation, local movers, moving service">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mymoon-brown.vercel.app/movers.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Packers & Movers – Free Quotes | MyMoon">
+  <meta property="og:description" content="Get free quotes from verified packers and movers near you. Fast, reliable, affordable.">
+  <meta property="og:url" content="https://mymoon-brown.vercel.app/movers.html">
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -13,27 +26,26 @@
   <div class="page">
 
     <!-- NAVBAR -->
-    <div class="navbar">
-      <div class="logo">Mymoon</div>
-    </div>
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="index.html" class="logo" aria-label="Back to MyMoon Home">My<span>Moon</span></a>
+    </nav>
 
     <!-- CENTER -->
-    <div class="center">
+    <main class="center">
       <div class="container">
 
         <h1 class="title">
-          Find trusted packers & movers
+          Find trusted packers &amp; movers
         </h1>
 
-        <div class="form-container">
+        <div class="form-container fade-in">
 
-          <!-- FORM -->
-          <form id="leadForm">
+          <form id="leadForm" novalidate>
 
-            <!-- Service -->
             <input type="hidden" name="service" value="Packers & Movers">
+            <input type="hidden" name="_subject" value="New Packers & Movers Lead – MyMoon">
 
-            <!-- Query -->
+            <!-- Query (prefilled) -->
             <div class="form-group">
               <input 
                 type="text"
@@ -41,6 +53,7 @@
                 name="query"
                 class="input"
                 readonly
+                aria-label="Your search query"
               >
             </div>
 
@@ -49,9 +62,11 @@
               <input 
                 type="text"
                 name="pickup_location"
-                placeholder="Pickup location"
+                placeholder="Pickup location (area / city)"
                 class="input"
                 required
+                autocomplete="address-level2"
+                aria-label="Pickup location"
               >
             </div>
 
@@ -60,20 +75,23 @@
               <input 
                 type="text"
                 name="drop_location"
-                placeholder="Drop location"
+                placeholder="Drop location (area / city)"
                 class="input"
                 required
+                autocomplete="address-level2"
+                aria-label="Drop location"
               >
             </div>
 
-            <!-- Size -->
+            <!-- Move size -->
             <div class="form-group">
-              <select name="move_size" class="input" required>
+              <select name="move_size" class="input" required aria-label="Move size">
                 <option value="">Move size</option>
                 <option>1 BHK</option>
                 <option>2 BHK</option>
-                <option>3 BHK</option>
-                <option>Office shifting</option>
+                <option>3 BHK or larger</option>
+                <option>Office / Commercial</option>
+                <option>Just a few items</option>
               </select>
             </div>
 
@@ -84,6 +102,7 @@
                 name="moving_date"
                 class="input"
                 required
+                aria-label="Preferred moving date"
               >
             </div>
 
@@ -92,9 +111,11 @@
               <input 
                 type="text"
                 name="name"
-                placeholder="Your name"
+                placeholder="Your full name"
                 class="input"
                 required
+                autocomplete="name"
+                aria-label="Your name"
               >
             </div>
 
@@ -103,9 +124,15 @@
               <input 
                 type="tel"
                 name="phone"
-                placeholder="Phone number"
+                placeholder="Mobile number"
                 class="input"
+                pattern="[6-9][0-9]{9}"
+                minlength="10"
+                maxlength="10"
+                inputmode="numeric"
                 required
+                autocomplete="tel"
+                aria-label="Mobile number"
               >
             </div>
 
@@ -114,42 +141,44 @@
               Get Free Quotes
             </button>
 
-            <div class="trust">
-              Verified movers · Quick response · Multiple quotes
-            </div>
+            <p class="trust">
+              Verified movers · Multiple quotes · No advance payment
+            </p>
 
           </form>
 
         </div>
 
       </div>
-    </div>
+    </main>
 
   </div>
 
-  <!-- JS -->
   <script>
-
     // Prefill query
     const params = new URLSearchParams(window.location.search);
     const query = params.get("query");
+    document.getElementById("userQuery").value = query || "Packers & Movers";
 
-    const input = document.getElementById("userQuery");
-
-    if (query) {
-      input.value = query;
-    } else {
-      input.value = "Packers & Movers";
+    // Set min date to today
+    const dateInput = document.querySelector('input[type="date"]');
+    if (dateInput) {
+      dateInput.min = new Date().toISOString().split("T")[0];
     }
 
-    // Form submit
     const form = document.getElementById("leadForm");
     const btn = document.getElementById("submitBtn");
 
-    form.addEventListener("submit", async function(e) {
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      btn.innerText = "Submitting...";
+      const phone = form.querySelector('input[name="phone"]').value;
+      if (!/^[6-9][0-9]{9}$/.test(phone)) {
+        alert("Please enter a valid 10-digit Indian mobile number.");
+        return;
+      }
+
+      btn.textContent = "Submitting…";
       btn.disabled = true;
 
       const formData = new FormData(form);
@@ -158,21 +187,15 @@
         await fetch("https://formspree.io/f/xwvrdjjz", {
           method: "POST",
           body: formData,
-          headers: {
-            'Accept': 'application/json'
-          }
+          headers: { Accept: "application/json" }
         });
-
-        // Redirect after success
-        window.location.href = "https://mymoon-brown.vercel.app/thankyou.html?service=packers%20and%20movers";
-
-      } catch (error) {
+        window.location.href = "thankyou.html?service=" + encodeURIComponent("Packers %26 Movers");
+      } catch (err) {
         alert("Something went wrong. Please try again.");
-        btn.innerText = "Get Free Quotes";
+        btn.textContent = "Get Free Quotes";
         btn.disabled = false;
       }
     });
-
   </script>
 
 </body>
