@@ -3,80 +3,113 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Request Submitted - Mymoon</title>
+
+  <!-- SEO: noindex thank-you pages -->
+  <title>Request Received – MyMoon</title>
+  <meta name="robots" content="noindex, nofollow">
 
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #e6f4ea;
+      color: #1e8e3e;
+      font-size: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .success-icon {
+        background: #1b3a26;
+        color: #81c995;
+      }
+    }
+
+    .response-badge {
+      display: inline-block;
+      background: var(--primary-surface);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-top: 12px;
+    }
+  </style>
 </head>
 
 <body>
 
   <div class="page">
 
-    <div class="center">
-      <div class="container" style="text-align:center; max-width:520px;">
+    <!-- NAVBAR -->
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="index.html" class="logo" aria-label="Back to MyMoon Home">My<span>Moon</span></a>
+    </nav>
 
-        <!-- SUCCESS TITLE -->
-        <h1 class="title">
-          Request received
+    <main class="center">
+      <div class="container fade-in" style="text-align:center; max-width:480px;">
+
+        <!-- Success icon -->
+        <div class="success-icon" aria-hidden="true">✓</div>
+
+        <h1 class="title" style="margin-bottom:8px;">
+          Request received!
         </h1>
 
-        <!-- DYNAMIC MESSAGE -->
-        <p class="trust" id="serviceMessage" style="margin-bottom:16px;">
-          We are connecting you with the right service provider
+        <p class="trust" id="serviceMessage" style="margin-bottom:8px;">
+          We're connecting you with the best professionals near you
         </p>
 
-        <!-- STATUS BOX -->
-        <div class="card" style="margin-top:20px;">
+        <div class="response-badge">⚡ Response in 5–15 minutes</div>
 
-          <p style="font-size:14px; margin-bottom:10px;">
-            What happens next:
-          </p>
-
-          <p class="trust">
-            • You will receive a call shortly  
-          </p>
-
-          <p class="trust">
-            • Verified professionals will contact you  
-          </p>
-
-          <p class="trust">
-            • Compare and choose the best option  
-          </p>
-
+        <!-- Steps card -->
+        <div class="steps-card">
+          <p>What happens next:</p>
+          <div class="step-item">
+            <span class="step-num">1</span>
+            Our team reviews your request
+          </div>
+          <div class="step-item">
+            <span class="step-num">2</span>
+            Verified professionals will call you
+          </div>
+          <div class="step-item">
+            <span class="step-num">3</span>
+            Compare quotes &amp; choose the best
+          </div>
         </div>
 
-        <!-- URGENCY -->
-        <div class="trust" style="margin-top:16px;">
-          Expected response time: <strong>5–15 minutes</strong>
-        </div>
-
-        <!-- WHATSAPP CTA -->
+        <!-- WhatsApp CTA -->
         <div style="margin-top:20px;">
-          <button class="btn" onclick="openWhatsApp()">
-            Chat on WhatsApp
+          <button class="btn" onclick="openWhatsApp()" aria-label="Chat with us on WhatsApp">
+            💬 Chat on WhatsApp
           </button>
         </div>
 
-        <!-- BACK HOME -->
-        <div class="chips" style="margin-top:16px;">
-          <div class="chip" onclick="goHome()">Back to Home</div>
+        <!-- Back home -->
+        <div class="chips" style="margin-top:14px; justify-content:center;">
+          <div class="chip" onclick="goHome()" tabindex="0" role="button" aria-label="Go back to home page">← Back to Home</div>
         </div>
 
       </div>
-    </div>
+    </main>
 
   </div>
 
   <script>
-
     const params = new URLSearchParams(window.location.search);
     const service = params.get("service");
 
     const msg = document.getElementById("serviceMessage");
-
     if (service) {
-      msg.innerText = "We are connecting you with the best " + service + " near you";
+      msg.textContent = "We're connecting you with the best " + decodeURIComponent(service) + " professionals near you";
     }
 
     function goHome() {
@@ -84,12 +117,15 @@
     }
 
     function openWhatsApp() {
-      const phone = "917460036898"; // replace with your number
-      const text = "Hi, I just submitted a request on Mymoon for " + (service || "a service");
-      const url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
-      window.open(url, "_blank");
+      const phone = "917460036898";
+      const serviceName = service ? decodeURIComponent(service) : "a service";
+      const text = "Hi, I just submitted a request on MyMoon for " + serviceName + ". Please help me.";
+      window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(text), "_blank", "noopener");
     }
 
+    document.querySelector('.chip[role="button"]').addEventListener("keydown", e => {
+      if (e.key === "Enter") goHome();
+    });
   </script>
 
 </body>

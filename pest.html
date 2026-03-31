@@ -3,7 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pest Control - Mymoon</title>
+
+  <!-- SEO -->
+  <title>Pest Control Near Me – Free Inspection | MyMoon</title>
+  <meta name="description" content="Book certified pest control near you. Termite, cockroach, bed bugs, rodents and more. Safe treatment, verified experts, quick response. Get a free inspection.">
+  <meta name="keywords" content="pest control near me, termite treatment, cockroach control, bed bug treatment, rodent control, home pest control">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mymoon-brown.vercel.app/pest.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pest Control – Free Inspection | MyMoon">
+  <meta property="og:description" content="Book certified pest control near you. Safe, fast, affordable.">
+  <meta property="og:url" content="https://mymoon-brown.vercel.app/pest.html">
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -13,28 +25,26 @@
   <div class="page">
 
     <!-- NAVBAR -->
-    <div class="navbar">
-      <div class="logo">Mymoon</div>
-    </div>
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="index.html" class="logo" aria-label="Back to MyMoon Home">My<span>Moon</span></a>
+    </nav>
 
     <!-- CENTER -->
-    <div class="center">
+    <main class="center">
       <div class="container">
 
-        <!-- TITLE -->
         <h1 class="title">
-          Get fast pest control service
+          Book certified pest control service
         </h1>
 
-        <!-- FORM -->
-        <div class="form-container">
+        <div class="form-container fade-in">
 
-          <form id="leadForm">
+          <form id="leadForm" novalidate>
 
-            <!-- SERVICE -->
             <input type="hidden" name="service" value="Pest Control">
+            <input type="hidden" name="_subject" value="New Pest Control Lead – MyMoon">
 
-            <!-- QUERY -->
+            <!-- Query (prefilled) -->
             <div class="form-group">
               <input 
                 type="text"
@@ -42,108 +52,113 @@
                 name="query"
                 class="input"
                 readonly
+                aria-label="Your search query"
               >
             </div>
 
-            <!-- PEST TYPE -->
+            <!-- Pest type -->
             <div class="form-group">
-              <select name="pest_type" class="input" required>
+              <select name="pest_type" class="input" required aria-label="Type of pest problem">
                 <option value="">Select pest problem</option>
                 <option>Termite</option>
                 <option>Cockroach</option>
                 <option>Bed Bugs</option>
-                <option>Rodents</option>
+                <option>Rodents / Rats</option>
                 <option>Mosquito</option>
+                <option>Ants</option>
                 <option>Other</option>
               </select>
             </div>
 
-            <!-- PROPERTY TYPE -->
+            <!-- Property type -->
             <div class="form-group">
-              <select name="property_type" class="input" required>
+              <select name="property_type" class="input" required aria-label="Property type">
                 <option value="">Property type</option>
                 <option>1 BHK</option>
                 <option>2 BHK</option>
-                <option>3 BHK</option>
-                <option>Villa</option>
-                <option>Office / Shop</option>
+                <option>3 BHK or larger</option>
+                <option>Villa / Independent house</option>
+                <option>Office / Commercial</option>
               </select>
             </div>
 
-            <!-- URGENCY -->
+            <!-- Urgency -->
             <div class="form-group">
-              <select name="urgency" class="input" required>
+              <select name="urgency" class="input" required aria-label="When do you need service">
                 <option value="">When do you need service?</option>
-                <option>Today</option>
+                <option>Today (urgent)</option>
                 <option>Within 24 hours</option>
                 <option>This week</option>
+                <option>Planning ahead</option>
               </select>
             </div>
 
-            <!-- NAME -->
+            <!-- Name -->
             <div class="form-group">
               <input 
                 type="text"
                 name="name"
-                placeholder="Your name"
+                placeholder="Your full name"
                 class="input"
                 required
+                autocomplete="name"
+                aria-label="Your name"
               >
             </div>
 
-            <!-- PHONE -->
+            <!-- Phone -->
             <div class="form-group">
               <input 
                 type="tel"
                 name="phone"
-                placeholder="Phone number"
+                placeholder="Mobile number"
                 class="input"
+                pattern="[6-9][0-9]{9}"
+                minlength="10"
+                maxlength="10"
+                inputmode="numeric"
                 required
+                autocomplete="tel"
+                aria-label="Mobile number"
               >
             </div>
 
-            <!-- SUBMIT -->
+            <!-- Submit -->
             <button type="submit" class="btn" id="submitBtn">
               Get Free Inspection
             </button>
 
-            <!-- TRUST -->
-            <div class="trust">
-              Safe treatment · Verified experts · Quick response
-            </div>
+            <p class="trust">
+              Safe, certified treatment · Verified experts · Quick response
+            </p>
 
           </form>
 
         </div>
 
       </div>
-    </div>
+    </main>
 
   </div>
 
-  <!-- JS -->
   <script>
-
-    // Prefill query
     const params = new URLSearchParams(window.location.search);
     const query = params.get("query");
+    document.getElementById("userQuery").value = query || "Pest Control";
 
-    const input = document.getElementById("userQuery");
-
-    if (query) {
-      input.value = query;
-    } else {
-      input.value = "Pest Control";
-    }
-
-    // Form submit
     const form = document.getElementById("leadForm");
     const btn = document.getElementById("submitBtn");
 
-    form.addEventListener("submit", async function(e) {
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      btn.innerText = "Submitting...";
+      const phone = form.querySelector('input[name="phone"]').value;
+      if (!/^[6-9][0-9]{9}$/.test(phone)) {
+        alert("Please enter a valid 10-digit Indian mobile number.");
+        return;
+      }
+
+      btn.textContent = "Submitting…";
       btn.disabled = true;
 
       const formData = new FormData(form);
@@ -153,22 +168,15 @@
         await fetch("https://formspree.io/f/xwvrdjjz", {
           method: "POST",
           body: formData,
-          headers: {
-            'Accept': 'application/json'
-          }
+          headers: { Accept: "application/json" }
         });
-
-        window.location.href =
-          "https://mymoon-brown.vercel.app/thankyou.html?service=" +
-          encodeURIComponent(service);
-
-      } catch (error) {
+        window.location.href = "thankyou.html?service=" + encodeURIComponent(service);
+      } catch (err) {
         alert("Something went wrong. Please try again.");
-        btn.innerText = "Get Free Inspection";
+        btn.textContent = "Get Free Inspection";
         btn.disabled = false;
       }
     });
-
   </script>
 
 </body>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Search Home Services – MyMoon</title>
+  <meta name="description" content="Search for packers and movers, pest control, AC repair and other home services near you. Trending searches and quick results.">
+  <meta name="robots" content="index, follow">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="page">
+
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="index.html" class="logo" aria-label="MyMoon Home">My<span>Moon</span></a>
+    </nav>
+
+    <main class="center">
+      <div class="container">
+
+        <!-- SEARCH -->
+        <div class="search-wrapper">
+          <form id="searchForm" role="search" aria-label="Search services">
+            <div class="search-box">
+              <input 
+                type="search"
+                id="searchInput"
+                class="search-input"
+                placeholder="Search services..."
+                autocomplete="off"
+                aria-label="Search for services"
+              >
+            </div>
+          </form>
+
+          <!-- SUGGESTIONS -->
+          <div class="suggestions" id="suggestionsBox" role="listbox" aria-label="Suggestions"></div>
+        </div>
+
+        <!-- TRENDING -->
+        <nav class="trending" aria-label="Trending searches">
+          <div class="section-title">Trending searches</div>
+
+          <div class="trend-item" onclick="goSearch('packers and movers near me')" tabindex="0" role="link" aria-label="Search packers and movers near me">
+            Packers &amp; movers near me
+          </div>
+          <div class="trend-item" onclick="goSearch('pest control near me')" tabindex="0" role="link" aria-label="Search pest control near me">
+            Pest control near me
+          </div>
+          <div class="trend-item" onclick="goSearch('ac repair near me')" tabindex="0" role="link" aria-label="Search AC repair near me">
+            AC repair near me
+          </div>
+          <div class="trend-item" onclick="goSearch('home cleaning services')" tabindex="0" role="link" aria-label="Search home cleaning services">
+            Home cleaning services
+          </div>
+        </nav>
+
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    const input = document.getElementById("searchInput");
+    const box = document.getElementById("suggestionsBox");
+
+    const suggestions = [
+      "packers and movers near me",
+      "house shifting services",
+      "office relocation",
+      "pest control near me",
+      "termite treatment",
+      "cockroach control",
+      "ac repair near me",
+      "ac gas refill",
+      "ac installation",
+      "home cleaning services",
+      "sofa cleaning",
+      "bathroom cleaning"
+    ];
+
+    input.addEventListener("input", function () {
+      const value = this.value.toLowerCase().trim();
+      box.innerHTML = "";
+
+      if (!value) {
+        box.style.display = "none";
+        return;
+      }
+
+      const filtered = suggestions.filter(item => item.includes(value)).slice(0, 6);
+      filtered.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "suggestion-item";
+        div.textContent = item;
+        div.setAttribute("role", "option");
+        div.onclick = () => goSearch(item);
+        box.appendChild(div);
+      });
+
+      box.style.display = filtered.length ? "block" : "none";
+    });
+
+    document.getElementById("searchForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (input.value.trim()) goSearch(input.value);
+    });
+
+    document.querySelectorAll('.trend-item').forEach(item => {
+      item.addEventListener("keydown", e => {
+        if (e.key === "Enter") item.click();
+      });
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".search-wrapper")) box.style.display = "none";
+    });
+
+    function goSearch(query) {
+      query = query.toLowerCase().trim();
+      if (query.includes("pack") || query.includes("move") || query.includes("shift")) {
+        window.location.href = "movers.html?query=" + encodeURIComponent(query);
+      } else if (query.includes("pest") || query.includes("termite") || query.includes("cockroach")) {
+        window.location.href = "pest.html?query=" + encodeURIComponent(query);
+      } else if (query.includes("ac") || query.includes("cool") || query.includes("air condition")) {
+        window.location.href = "ac.html?query=" + encodeURIComponent(query);
+      } else {
+        window.location.href = "general.html?query=" + encodeURIComponent(query);
+      }
+    }
+  </script>
+
+</body>
+</html>

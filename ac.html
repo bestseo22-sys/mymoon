@@ -3,7 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AC Repair Service - My Moon</title>
+
+  <!-- SEO -->
+  <title>AC Repair Near Me – Gas Refill & Service | MyMoon</title>
+  <meta name="description" content="Book AC repair, gas refill, installation and service near you. Verified technicians, fast response, affordable rates. Split, window and central AC serviced.">
+  <meta name="keywords" content="AC repair near me, AC gas refill, air conditioner service, AC installation, split AC repair, window AC repair">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mymoon-brown.vercel.app/ac.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AC Repair & Service | MyMoon">
+  <meta property="og:description" content="Book AC repair, gas refill and service near you. Fast response, affordable rates.">
+  <meta property="og:url" content="https://mymoon-brown.vercel.app/ac.html">
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -13,28 +25,26 @@
   <div class="page">
 
     <!-- NAVBAR -->
-    <div class="navbar">
-      <div class="logo">My Moon</div>
-    </div>
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="index.html" class="logo" aria-label="Back to MyMoon Home">My<span>Moon</span></a>
+    </nav>
 
     <!-- CENTER -->
-    <div class="center">
+    <main class="center">
       <div class="container">
 
-        <!-- TITLE -->
         <h1 class="title">
-          Get fast AC repair service
+          Book AC repair &amp; service near you
         </h1>
 
-        <!-- FORM -->
-        <div class="form-container">
+        <div class="form-container fade-in">
 
-          <form id="leadForm">
+          <form id="leadForm" novalidate>
 
-            <!-- SERVICE -->
             <input type="hidden" name="service" value="AC Repair">
+            <input type="hidden" name="_subject" value="New AC Repair Lead – MyMoon">
 
-            <!-- QUERY -->
+            <!-- Query (prefilled) -->
             <div class="form-group">
               <input 
                 type="text"
@@ -42,109 +52,111 @@
                 name="query"
                 class="input"
                 readonly
+                aria-label="Your search query"
               >
             </div>
 
-            <!-- ISSUE -->
+            <!-- Issue -->
             <div class="form-group">
-              <select name="issue" class="input" required>
+              <select name="issue" class="input" required aria-label="Describe the AC issue">
                 <option value="">What is the issue?</option>
                 <option>Not cooling</option>
                 <option>Gas refill needed</option>
                 <option>Water leakage</option>
                 <option>Strange noise</option>
                 <option>AC not turning on</option>
-                <option>General service</option>
+                <option>New installation</option>
+                <option>Annual service / cleaning</option>
               </select>
             </div>
 
-            <!-- AC TYPE -->
+            <!-- AC Type -->
             <div class="form-group">
-              <select name="ac_type" class="input" required>
+              <select name="ac_type" class="input" required aria-label="Type of AC">
                 <option value="">AC type</option>
                 <option>Split AC</option>
                 <option>Window AC</option>
-                <option>Central AC</option>
+                <option>Cassette / Central AC</option>
               </select>
             </div>
 
-            <!-- URGENCY -->
+            <!-- Urgency -->
             <div class="form-group">
-              <select name="urgency" class="input" required>
+              <select name="urgency" class="input" required aria-label="When do you need service">
                 <option value="">When do you need service?</option>
                 <option>Urgent (today)</option>
                 <option>Within 24 hours</option>
                 <option>This week</option>
+                <option>Planning ahead</option>
               </select>
             </div>
 
-            <!-- NAME -->
+            <!-- Name -->
             <div class="form-group">
               <input 
                 type="text"
                 name="name"
-                placeholder="Your name"
+                placeholder="Your full name"
                 class="input"
                 required
+                autocomplete="name"
+                aria-label="Your name"
               >
             </div>
 
-            <!-- PHONE -->
-<div class="form-group">
-  <input 
-    type="tel"
-    name="phone"
-    placeholder="Phone number"
-    class="input"
-    pattern="[0-9]{10,}"
-    minlength="10"
-    maxlength="15"
-    inputmode="numeric"
-    required
-  >
-</div>
-            <!-- SUBMIT -->
+            <!-- Phone -->
+            <div class="form-group">
+              <input 
+                type="tel"
+                name="phone"
+                placeholder="Mobile number"
+                class="input"
+                pattern="[6-9][0-9]{9}"
+                minlength="10"
+                maxlength="10"
+                inputmode="numeric"
+                required
+                autocomplete="tel"
+                aria-label="Mobile number"
+              >
+            </div>
+
+            <!-- Submit -->
             <button type="submit" class="btn" id="submitBtn">
               Book AC Service
             </button>
 
-            <!-- TRUST -->
-            <div class="trust">
-              Verified technicians · Fast response · Affordable service
-            </div>
+            <p class="trust">
+              Verified technicians · Fast response · Affordable rates
+            </p>
 
           </form>
 
         </div>
 
       </div>
-    </div>
+    </main>
 
   </div>
 
-  <!-- JS -->
   <script>
-
-    // Prefill query
     const params = new URLSearchParams(window.location.search);
     const query = params.get("query");
+    document.getElementById("userQuery").value = query || "AC Repair Service";
 
-    const input = document.getElementById("userQuery");
-
-    if (query) {
-      input.value = query;
-    } else {
-      input.value = "AC Repair Service";
-    }
-
-    // Form submit
     const form = document.getElementById("leadForm");
     const btn = document.getElementById("submitBtn");
 
-    form.addEventListener("submit", async function(e) {
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      btn.innerText = "Submitting...";
+      const phone = form.querySelector('input[name="phone"]').value;
+      if (!/^[6-9][0-9]{9}$/.test(phone)) {
+        alert("Please enter a valid 10-digit Indian mobile number.");
+        return;
+      }
+
+      btn.textContent = "Submitting…";
       btn.disabled = true;
 
       const formData = new FormData(form);
@@ -154,22 +166,15 @@
         await fetch("https://formspree.io/f/xwvrdjjz", {
           method: "POST",
           body: formData,
-          headers: {
-            'Accept': 'application/json'
-          }
+          headers: { Accept: "application/json" }
         });
-
-        window.location.href =
-          "https://mymoon-brown.vercel.app/thankyou.html?service=" +
-          encodeURIComponent(service);
-
-      } catch (error) {
+        window.location.href = "thankyou.html?service=" + encodeURIComponent(service);
+      } catch (err) {
         alert("Something went wrong. Please try again.");
-        btn.innerText = "Book AC Service";
+        btn.textContent = "Book AC Service";
         btn.disabled = false;
       }
     });
-
   </script>
 
 </body>
